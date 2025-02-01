@@ -3,10 +3,6 @@ from matplotlib.patches import Rectangle
 from Core import CountCalls
 
 def reporti(searchers, problems, verbose=True):
-    """
-    Mostra estatísticas resumidas para cada `searcher` em cada problema.
-    Cria gráficos de barras para visualizar as métricas de desempenho.
-    """
     for p in problems:    
         title = p.__str__()# Nome do problema
         plotation = []  # Dados para plotagem
@@ -21,7 +17,7 @@ def reporti(searchers, problems, verbose=True):
             # Armazena os valores das métricas
             plotation.append([counts['result'], counts['is_goal'], counts['cost'], counts['actions']])
             labels.append(searcher.__name__)  # Nome do searcher
-            print(plotation)
+            
         plot_graph(plotation, labels, title)
            
         
@@ -30,18 +26,10 @@ def reporti(searchers, problems, verbose=True):
         
         
 def plot_graph(data, labels, title):
-    """
-    Cria um gráfico de barras para os dados fornecidos.
-
-    Args:
-        data (list of list): Lista contendo os valores das métricas para cada searcher.
-        labels (list): Lista de nomes dos searchers.
-        title (str): Título do gráfico.
-    """
+    
     num_searchers = len(data)
     num_metrics = len(data[0]) if data else 0
     metric_names = ["result", "is_goal", "cost", "actions"]
-    bar_conteiner = []
     
     # Configuração do gráfico
     x = range(num_metrics)  # Posições das métricas
@@ -60,7 +48,7 @@ def plot_graph(data, labels, title):
             y_text  = bar.get_height()
             
             plt.text(
-            x_text, y_text,  f'{y_text:.2f}',  # Texto formatado com duas casas decimais
+            x_text, y_text,  f'{y_text:.2f}',  
             ha='center', va='bottom', fontsize=10, fontweight='bold', color='black'
         )
     
