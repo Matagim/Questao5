@@ -6,7 +6,7 @@ def reporti(searchers, problems, verbose=True):
     for p in problems:    
         title = p.__str__()# Nome do problema
         plotation = []  # Dados para plotagem
-        labels = []     # Labels dos searchers
+        names = []     # Labels dos searchers
 
         for searcher in searchers:
             prob = CountCalls(p)  # Conta chamadas para o problema
@@ -16,9 +16,9 @@ def reporti(searchers, problems, verbose=True):
             
             # Armazena os valores das métricas
             plotation.append([counts['result'], counts['is_goal'], counts['cost'], counts['actions']])
-            labels.append(searcher.__name__)  # Nome do searcher
+            names.append(searcher.__name__)  # Nome do searcher
             
-        plot_graph(plotation, labels, title)
+        plot_graph(plotation, names, title)
            
         
 
@@ -39,7 +39,7 @@ def plot_graph(data, labels, title):
     for i, searcher_data in enumerate(data):
         # Define posições para as barras de cada searcher
         x_positions = [pos + i * largura for pos in x]
-        bars = plt.bar(x_positions, searcher_data, width=largura, label=labels[i])
+        bars = plt.bar(x_positions, searcher_data, largura, labels[i])
         
 
         for bar in bars:
@@ -49,13 +49,13 @@ def plot_graph(data, labels, title):
             
             plt.text(
             x_text, y_text,  f'{y_text:.2f}',  
-            ha='center', va='bottom', fontsize=10, fontweight='bold', color='black'
+            'center', 'bottom', 10, 'bold', 'black'
         )
     
     # Configurações do eixo X e título
-    plt.title(title, fontsize=16)
-    plt.xlabel("Métricas", fontsize=12)
-    plt.ylabel("Valores", fontsize=12)
+    plt.title(title, 16)
+    plt.xlabel("Métricas", 12)
+    plt.ylabel("Valores", 12)
     plt.xticks([pos + largura * (num_searchers / 2 - 0.5) for pos in x], metric_names)
     plt.legend(title="Searchers")
     plt.grid(axis='y', linestyle='--', alpha=0.7)
